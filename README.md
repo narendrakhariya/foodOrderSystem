@@ -1,3 +1,16 @@
+# Food order system
+
+This interface handle customer food order and many other feature like Add meals options and available meals etc.
+
+- This store and fetch data from firebase realtime database API (http: request, response)
+- Applied strong validation logic
+- Modular component flow
+- Used hooks like useReducer, useContext etc. for state management
+- Centralized error handled
+- Implimented User feedback form
+- Implimented Checkout form
+- Applied Css module for style
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
