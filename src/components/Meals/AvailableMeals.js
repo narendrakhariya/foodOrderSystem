@@ -6,14 +6,19 @@ import MealItem from "./MealItem/MealItem";
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [httpError, setHttpError] = useState(null);
 
   useEffect(() => {
     const fetchMeals = async () => {
       const response = await fetch(
         "https://react-movie-http-5e5d2-default-rtdb.firebaseio.com/meals.json"
       );
-      const responseData = await response.json();
 
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
+
+      const responseData = await response.json();
       // Transform data
       const loadedMeals = [];
       for (const key in responseData) {
@@ -28,13 +33,25 @@ const AvailableMeals = () => {
       setLoading(false);
     };
 
-    fetchMeals();
+    // Handler error this way becasue it is async function
+    fetchMeals().catch((error) => {
+      setLoading(false);
+      setHttpError(error.message);
+    });
   }, []);
 
   if (isLoading) {
     return (
-      <section className={classes["meals-loading"]}>
+      <section className={classes.MealsLoading}>
         <p>Loading...</p>
+      </section>
+    );
+  }
+
+  if (httpError) {
+    return (
+      <section className={classes.MealsError}>
+        <p>{httpError}</p>
       </section>
     );
   }
